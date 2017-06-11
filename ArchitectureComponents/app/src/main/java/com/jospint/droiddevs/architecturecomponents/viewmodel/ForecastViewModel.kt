@@ -2,6 +2,7 @@ package com.jospint.droiddevs.architecturecomponents.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.os.AsyncTask
 import com.jospint.droiddevs.architecturecomponents.data.darksky.DarkSkyRepository
 import com.jospint.droiddevs.architecturecomponents.db.AppDatabase
 import com.jospint.droiddevs.architecturecomponents.model.Forecast
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class ForecastViewModel
 @Inject
-constructor(private val darkSkyRepository: DarkSkyRepository) : ViewModel() {
+constructor(private val darkSkyRepository: DarkSkyRepository, private val database: AppDatabase) : ViewModel() {
 
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
@@ -27,9 +28,10 @@ constructor(private val darkSkyRepository: DarkSkyRepository) : ViewModel() {
         return forecastData!!;
     }
 
-    fun saveForecast(place: Place, forecast: Forecast){
+    fun saveForecast(place: Place, forecast: Forecast) {
         place.forecast = forecast
-        //database.ForecastDao().insertPlace(place)
+        AsyncTask.execute({ database.ForecastDao().insertPlace(place) })
+
     }
 
 }

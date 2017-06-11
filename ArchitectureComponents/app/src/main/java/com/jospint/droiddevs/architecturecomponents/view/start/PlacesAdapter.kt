@@ -10,7 +10,6 @@ import com.jospint.droiddevs.architecturecomponents.util.extension.singleClick
 import kotlinx.android.synthetic.main.view_locality.view.*
 import kotlin.properties.Delegates
 
-
 class PlacesAdapter : RecyclerView.Adapter<PlacesAdapter.LocalityVH>() {
 
     var listener: (PlaceResult) -> Unit = {}

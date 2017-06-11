@@ -3,7 +3,6 @@ package com.jospint.droiddevs.architecturecomponents.data.googlemaps
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.GeocodeResponse
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.PlaceResponse
 import io.reactivex.Flowable
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 

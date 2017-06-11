@@ -9,13 +9,11 @@ import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jospint.droiddevs.architecturecomponents.R
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.PlaceResponse
-import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.PlaceResult
 import com.jospint.droiddevs.architecturecomponents.util.Resource
 import com.jospint.droiddevs.architecturecomponents.util.ResourceStatus
 import com.jospint.droiddevs.architecturecomponents.view.BaseActivity
 import com.jospint.droiddevs.architecturecomponents.view.forecast.ForecastActivity
 import com.jospint.droiddevs.architecturecomponents.viewmodel.PlaceViewModel
-import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_start.*
 import org.jetbrains.anko.act

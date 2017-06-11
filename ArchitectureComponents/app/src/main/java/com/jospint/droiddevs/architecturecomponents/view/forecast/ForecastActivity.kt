@@ -10,7 +10,6 @@ import android.support.annotation.DrawableRes
 import android.widget.Toast
 import com.jospint.droiddevs.architecturecomponents.R
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.PlaceResult
-import com.jospint.droiddevs.architecturecomponents.db.AppDatabase
 import com.jospint.droiddevs.architecturecomponents.model.Forecast
 import com.jospint.droiddevs.architecturecomponents.util.Resource
 import com.jospint.droiddevs.architecturecomponents.util.ResourceStatus

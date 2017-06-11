@@ -1,6 +1,5 @@
 package com.jospint.droiddevs.architecturecomponents.data.googlemaps
 
-import com.jospint.droiddevs.architecturecomponents.data.darksky.DarkSkyApi
 import com.jospint.droiddevs.architecturecomponents.injection.annotation.ApplicationQualifier
 import com.jospint.droiddevs.architecturecomponents.injection.module.NetworkModule
 import com.squareup.moshi.Moshi

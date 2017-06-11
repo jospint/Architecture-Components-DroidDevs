@@ -10,7 +10,6 @@ import com.jospint.droiddevs.architecturecomponents.injection.annotation.ViewMod
 import com.jospint.droiddevs.architecturecomponents.util.ViewModelFactory
 import com.jospint.droiddevs.architecturecomponents.viewmodel.PlaceViewModel
 
-
 @Module
 abstract class ViewModelsModule {
 

@@ -31,7 +31,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providePicasso(@ApplicationQualifier context: Context, @ApplicationQualifier okHttpClient: OkHttpClient)
+    fun providePicasso(context: Context, @ApplicationQualifier okHttpClient: OkHttpClient)
             = Picasso.Builder(context).downloader(OkHttp3Downloader(okHttpClient)).build()!!
 
     @Provides

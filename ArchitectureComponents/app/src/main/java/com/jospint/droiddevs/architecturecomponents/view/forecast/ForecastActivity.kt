@@ -7,13 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.DrawableRes
-import android.view.MenuItem
 import android.widget.Toast
 import com.jospint.droiddevs.architecturecomponents.R
-import com.jospint.droiddevs.architecturecomponents.data.darksky.model.Forecast
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.model.PlaceResult
+import com.jospint.droiddevs.architecturecomponents.db.AppDatabase
+import com.jospint.droiddevs.architecturecomponents.model.Forecast
 import com.jospint.droiddevs.architecturecomponents.util.Resource
 import com.jospint.droiddevs.architecturecomponents.util.ResourceStatus
+import com.jospint.droiddevs.architecturecomponents.util.extension.toPlace
 import com.jospint.droiddevs.architecturecomponents.view.BaseActivity
 import com.jospint.droiddevs.architecturecomponents.viewmodel.ForecastViewModel
 import dagger.android.AndroidInjection
@@ -38,35 +39,38 @@ class ForecastActivity : BaseActivity() {
 
     lateinit var forecastViewModel: ForecastViewModel
 
-    lateinit var place: PlaceResult;
+    lateinit var placeResult: PlaceResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(act)
         setContentView(R.layout.activity_forecast)
-        place = intent.getParcelableExtra<PlaceResult>(EXTRA_PLACE)
+        placeResult = intent.getParcelableExtra<PlaceResult>(EXTRA_PLACE)
         forecastViewModel = ViewModelProviders.of(this, viewModelFactory).get(ForecastViewModel::class.java)
-        val location = place.geometry!!.location!!;
+        val location = placeResult.geometry!!.location!!;
         forecastViewModel.getForecast(location.lat!!, location.lng!!).observe(this, Observer<Resource<Forecast>> { resource ->
             when (resource!!.resourceStatus) {
-                ResourceStatus.SUCCESS -> updateUI(resource.data!!)
+                ResourceStatus.SUCCESS -> {
+                    forecastViewModel.saveForecast(placeResult.toPlace(), resource.data!!)
+                    updateUI(resource.data)
+                }
                 ResourceStatus.ERROR -> Toast.makeText(this@ForecastActivity, "No forecast!!! :(", Toast.LENGTH_SHORT).show();
                 ResourceStatus.LOADING -> Toast.makeText(this@ForecastActivity, "Loading!", Toast.LENGTH_SHORT).show();
             }
         })
     }
 
-    private fun updateUI(forecast: Forecast){
-        forecast_locality.text = place.name
-        forecast_weather_icon.setImageResource(iconFromIconId(forecast.currently?.icon!!))
-        forecast_weather_description.text = forecast.currently.summary
-        forecast_temperature_text.text = forecast.currently.temperature.toString()
-        forecast_wind_text.text = forecast.currently.windSpeed.toString()
-        forecast_summary_text.text = forecast.daily?.summary
+    private fun updateUI(forecast: Forecast) {
+        forecast_locality.text = placeResult.name
+        forecast_weather_icon.setImageResource(iconFromIconId(forecast.iconId))
+        forecast_weather_description.text = forecast.description
+        forecast_temperature_text.text = forecast.temperature.toString()
+        forecast_wind_text.text = forecast.windSpeed.toString()
+        forecast_summary_text.text = forecast.prediction
     }
 
-    @DrawableRes private fun iconFromIconId(iconId:String): Int{
-        return when(iconId){
+    @DrawableRes private fun iconFromIconId(iconId: String): Int {
+        return when (iconId) {
             "clear-day" -> R.drawable.clear_day
             "clear-night" -> R.drawable.clear_night
             "rain" -> R.drawable.rain

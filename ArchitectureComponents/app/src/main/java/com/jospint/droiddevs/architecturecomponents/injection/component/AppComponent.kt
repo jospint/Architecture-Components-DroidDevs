@@ -5,6 +5,7 @@ import com.jospint.droiddevs.architecturecomponents.data.darksky.DarkSkyModule
 import com.jospint.droiddevs.architecturecomponents.data.googlemaps.GoogleMapsModule
 import com.jospint.droiddevs.architecturecomponents.injection.module.NetworkModule
 import com.jospint.droiddevs.architecturecomponents.injection.module.AndroidInjectorsModule
+import com.jospint.droiddevs.architecturecomponents.injection.module.DatabaseModule
 import com.jospint.droiddevs.architecturecomponents.injection.module.ViewModelsModule
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -16,6 +17,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AndroidInjectorsModule::class,
         ViewModelsModule::class,
+        DatabaseModule::class,
         NetworkModule::class,
         DarkSkyModule::class,
         GoogleMapsModule::class

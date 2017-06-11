@@ -15,6 +15,15 @@ fun <T> Flowable<T>.enqueueToResource(errorMessage: String?): MutableLiveData<Re
 }
 
 fun <T> Flowable<T>.enqueueToResource(errorMessage: String?, loadingMessage: String?): MutableLiveData<Resource<T>> {
+    val result = MediatorLiveData<Resource<T>>()
+    result.value = Resource.loading(loadingMessage)
+    this.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            { response -> result.value = Resource.success(response); },
+            { e -> result.value = Resource.error(errorMessage ?: e.toString()) })
+    return result
+}
+
+fun <T> Flowable<T>.enqueueToResourcealt(errorMessage: String?, loadingMessage: String?): MutableLiveData<Resource<T>> {
     val safeFlowable = this.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
     val liveData = LiveDataReactiveStreams.fromPublisher(safeFlowable) as MutableLiveData<T>
     val result = MediatorLiveData<Resource<T>>()
@@ -22,14 +31,5 @@ fun <T> Flowable<T>.enqueueToResource(errorMessage: String?, loadingMessage: Str
     result.addSource(liveData) { emittedValue ->
         result.value = if (emittedValue is T) Resource.success(emittedValue) else Resource.error(errorMessage ?: emittedValue.toString());
     }
-    return result
-}
-
-fun <T> Flowable<T>.enqueueToResourceAlt(errorMessage: String?, loadingMessage: String?): MutableLiveData<Resource<T>> {
-    val result = MediatorLiveData<Resource<T>>()
-    result.value = Resource.loading(loadingMessage)
-    this.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            { response -> result.value = Resource.success(response); },
-            { e -> result.value = Resource.error(errorMessage ?: e.toString()) })
     return result
 }

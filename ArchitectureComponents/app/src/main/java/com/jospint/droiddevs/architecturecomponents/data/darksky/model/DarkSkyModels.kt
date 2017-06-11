@@ -4,7 +4,7 @@ import paperparcel.PaperParcel
 import paperparcel.PaperParcelable
 
 @PaperParcel
-data class Forecast(
+data class ForecastData(
         val latitude: Double,
         val longitude: Double,
         val timezone: String?,
@@ -15,7 +15,7 @@ data class Forecast(
         val daily: DataBlock?,
         val flags: Flags?) : PaperParcelable {
     companion object {
-        @JvmField val CREATOR = PaperParcelForecast.CREATOR
+        @JvmField val CREATOR = PaperParcelForecastData.CREATOR
     }
 }
 

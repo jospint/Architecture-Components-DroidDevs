@@ -1,6 +1,6 @@
 package com.jospint.droiddevs.architecturecomponents.data.darksky
 
-import com.jospint.droiddevs.architecturecomponents.data.darksky.model.Forecast
+import com.jospint.droiddevs.architecturecomponents.data.darksky.model.ForecastData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,7 +18,7 @@ interface DarkSkyApi {
             @Path("latitude") latitude: Double,
             @Path("longitude") longitude: Double,
             @Query("units") units: String?
-    ): Call<Forecast>
+    ): Call<ForecastData>
 
     @GET("{key}/{latitude},{longitude},{time}")
     fun getTimeMachineForecast(
@@ -27,6 +27,6 @@ interface DarkSkyApi {
             @Path("longitude") longitude: Double,
             @Path("time") time: Int,
             @Query("units") units: String?
-    ): Call<Forecast>
+    ): Call<ForecastData>
 
 }

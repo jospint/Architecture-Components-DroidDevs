@@ -12,10 +12,14 @@ import dagger.android.ContributesAndroidInjector
 abstract class AndroidInjectorsModule {
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(StartModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(
+            StartModule::class,
+            LifecycleObserversModule::class))
     abstract fun contributeStartActivity(): StartActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(ForecastModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(
+            ForecastModule::class,
+            LifecycleObserversModule::class))
     abstract fun contributeForecastActivity(): ForecastActivity
 }

@@ -17,13 +17,13 @@ abstract class ViewModelsModule {
     @Binds
     @IntoMap
     @ViewModelKey(PlaceViewModel::class)
-    internal abstract fun bindPlaceViewModel(placeViewModel: PlaceViewModel): ViewModel
+    abstract fun bindPlaceViewModel(placeViewModel: PlaceViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ForecastViewModel::class)
-    internal abstract fun bindForecastViewModel(forecastViewModel: ForecastViewModel): ViewModel
+    abstract fun bindForecastViewModel(forecastViewModel: ForecastViewModel): ViewModel
 
     @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

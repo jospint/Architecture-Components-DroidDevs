@@ -40,7 +40,6 @@ class StartActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(act)
         setContentView(R.layout.activity_start)
         placeViewModel = ViewModelProviders.of(this, viewModelFactory).get(PlaceViewModel::class.java)
         setupUI()

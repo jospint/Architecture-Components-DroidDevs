@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -21,6 +22,7 @@ class GoogleMapsModule {
             Retrofit.Builder()
                     .baseUrl(GoogleMapsApi.BASE_URL)
                     .client(okHttpClient)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .build().create(GoogleMapsApi::class.java)!!
 }

@@ -16,14 +16,14 @@ fun <T> Call<T>.enqueueToResource(errorMessage: String?): MutableLiveData<Resour
 
 fun <T> Call<T>.enqueueToResource(errorMessage: String?, loadingMessage: String?): MutableLiveData<Resource<T>> {
     val liveData = MutableLiveData<Resource<T>>()
-    liveData.value = Resource.loading();
+    liveData.value = Resource.loading(loadingMessage);
     this.enqueue(object : Callback<T> {
         override fun onResponse(call: Call<T>?, response: Response<T>?) {
             liveData.value = Resource.success(response?.body()!!);
         }
 
         override fun onFailure(call: Call<T>?, t: Throwable?) {
-            liveData.value = Resource.error(t.toString(), null)
+            liveData.value = Resource.error(errorMessage ?: t.toString())
         }
     })
     return liveData

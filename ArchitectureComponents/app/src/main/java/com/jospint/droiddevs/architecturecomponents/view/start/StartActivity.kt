@@ -55,24 +55,18 @@ class StartActivity : BaseActivity() {
     }
 
     private fun setupInput() {
-        RxTextView
-                .afterTextChangeEvents(start_input)
+        RxTextView.afterTextChangeEvents(start_input)
                 .skip(1).debounce(LOOKUP_DEBOUNCE_MILLIS, TimeUnit.MILLISECONDS)
+                .filter { input -> input.editable().toString().length > LOOKUP_THRESHOLD }
                 .observeOn(AndroidSchedulers.mainThread()).subscribe { input ->
-            run {
-                val inputString = input.editable().toString()
-                if (inputString.length > LOOKUP_THRESHOLD) {
-                    placeViewModel.getPlaces(inputString)
-                            .observe(this@StartActivity, Observer<Resource<PlaceResponse>> { resource ->
-                                when (resource!!.resourceStatus) {
-                                    ResourceStatus.SUCCESS -> adapter.places = resource.data?.results!!
-                                    ResourceStatus.ERROR -> Toast.makeText(this@StartActivity, "Can't get places!!! :(", Toast.LENGTH_SHORT).show();
-                                    ResourceStatus.LOADING -> Toast.makeText(this@StartActivity, "Loading!", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                }
-            }
-
+            placeViewModel.getPlaces(input.editable().toString())
+                    .observe(this@StartActivity, Observer<Resource<PlaceResponse>> { resource ->
+                        when (resource!!.resourceStatus) {
+                            ResourceStatus.SUCCESS -> adapter.places = resource.data?.results!!
+                            ResourceStatus.ERROR -> Toast.makeText(this@StartActivity, "Can't get places!!! :(", Toast.LENGTH_SHORT).show();
+                            ResourceStatus.LOADING -> Toast.makeText(this@StartActivity, "Loading!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
         }
     }
 

@@ -15,7 +15,7 @@ fun <T> Flowable<T>.enqueueToResource(errorMessage: String?): MutableLiveData<Re
 }
 
 fun <T> Flowable<T>.enqueueToResource(errorMessage: String?, loadingMessage: String?): MutableLiveData<Resource<T>> {
-    val result = MediatorLiveData<Resource<T>>()
+    val result = MutableLiveData<Resource<T>>()
     result.value = Resource.loading(loadingMessage)
     this.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             { response -> result.value = Resource.success(response); },

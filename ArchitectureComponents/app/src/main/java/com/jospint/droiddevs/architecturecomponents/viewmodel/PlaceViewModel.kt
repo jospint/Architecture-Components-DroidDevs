@@ -11,10 +11,14 @@ class PlaceViewModel
 @Inject
 constructor(private val googleMapsRepository: GoogleMapsRepository) : ViewModel() {
 
+    private var currentSearch: String? = null;
     private var places: MutableLiveData<Resource<PlaceResponse>>? = null
 
     fun getPlaces(place: String): MutableLiveData<Resource<PlaceResponse>> {
-        places = googleMapsRepository.getLocality(place);
+        if (places == null || place != currentSearch) {
+            currentSearch = place;
+            places = googleMapsRepository.getLocality(place);
+        }
         return places!!;
     }
 

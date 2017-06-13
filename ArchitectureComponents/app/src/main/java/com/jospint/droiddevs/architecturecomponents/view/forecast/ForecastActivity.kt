@@ -42,7 +42,6 @@ class ForecastActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(act)
         setContentView(R.layout.activity_forecast)
         placeResult = intent.getParcelableExtra<PlaceResult>(EXTRA_PLACE)
         forecastViewModel = ViewModelProviders.of(this, viewModelFactory).get(ForecastViewModel::class.java)

@@ -33,7 +33,6 @@ class StartActivity : BaseActivity() {
     @Inject
     lateinit var adapter: PlacesAdapter
 
-    @Inject
     lateinit var placeViewModel: PlaceViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
